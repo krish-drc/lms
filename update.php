@@ -53,7 +53,8 @@ if(isset($_POST['update'])){
  <form method="POST">
    <div class="mb-3">
      <label class="form-label">Name</label>
-     <input type="text" name="name" value="<?php echo htmlspecialchars($row['name']); ?>" class="form-control" required>
+     <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($row['name']); ?>" class="form-control" 
+     oninput="this.value = this.value.toUpperCase()" required>
    </div>
    <div class="mb-3">
      <label class="form-label">Email</label>
@@ -61,11 +62,24 @@ if(isset($_POST['update'])){
    </div>
    <div class="mb-3">
      <label class="form-label">Phone</label>
-     <input type="text" name="phone" value="<?php echo htmlspecialchars($row['phone']); ?>" class="form-control" required>
+     <input type="text" name="phone" value="<?php echo htmlspecialchars($row['phone']); ?>" class="form-control" 
+     oninput="this.value=this.value.replace(/[^0-9]/g,'')" required>
    </div>
    <button type="submit" name="update" class="btn btn-success">Update</button>
    <a href="view.php" class="btn btn-secondary">Cancel</a>
  </form>
 </div>
+
+<script>
+document.getElementById("name").addEventListener("input", function() {
+  let name = this.value;
+  if(name.length < 3){
+    this.style.borderColor = "red";
+  } else {
+    this.style.borderColor = "green";
+  }
+});
+</script>
+
 </body>
 </html>

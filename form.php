@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "INSERT INTO entries (name, email, phone) VALUES ('$name','$email','$phone')";
 
     if ($conn->query($sql) === TRUE) {
-        echo "<p>Entry added successfully!</p>";
+        echo "";
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
@@ -43,17 +43,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1">
- <title>Form - Libarary Management System</title>
+ <title>Form - Library Management System</title>
  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 rel="stylesheet">
 </head>
 <body class="bg-light">
  <div class="container mt-5">
  <h2 class="mb-4">Add Entry</h2>
+
+
+ <div class="alert alert-success" role="alert">
+  Entry submitted successfully!
+ </div>
+ 
+
  <form method="POST" action="form.php" onsubmit="return validateForm()">
  <div class="mb-3">
    <label class="form-label">Name</label>
-   <input type="text" name="name" id="name" class="form-control" placeholder="Enter Name" required>
+   <input type="text" name="name" id="name" class="form-control" placeholder="Enter Name" oninput="this.value = this.value.toUpperCase()" required>
  </div>
  <div class="mb-3">
    <label class="form-label">Email</label>
@@ -61,7 +68,8 @@ rel="stylesheet">
  </div>
  <div class="mb-3">
    <label class="form-label">Phone</label>
-   <input type="text" name="phone" id="phone" class="form-control" placeholder="Enter Phone" required>
+   <input type="text" name="phone" id="phone" class="form-control" placeholder="Enter Phone" 
+   oninput="this.value=this.value.replace(/[^0-9]/g,'')" required>
  </div>
  <button type="submit" class="btn btn-success">Submit</button>
  <button type="reset" class="btn btn-secondary">Clear Form</button>
@@ -85,6 +93,16 @@ return false; }
  alert("Form submitted successfully!");
  return true;
 }
+</script>
+<script>
+document.getElementById("name").addEventListener("input", function() {
+  let name = this.value;
+  if(name.length < 3){
+    this.style.borderColor = "red";
+  } else {
+    this.style.borderColor = "green";
+  }
+});
 </script>
 </body>
 </html>
